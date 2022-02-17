@@ -7,10 +7,10 @@ BASE_URL = '/api'
 app = Flask(__name__)
 api = Api(app)
 
-api.add_resource(BookList, f'{BASE_URL}/BookList/<book_id>')
+api.add_resource(BookList, f'{BASE_URL}/BookList')
 api.add_resource(Book, f'{BASE_URL}/Books/<book_id>')
 api.add_resource(ReviewList, f'{BASE_URL}/ReviewList')
-api.add_resource(Review, f'{BASE_URL}/Review')
+api.add_resource(Review, f'{BASE_URL}/Review/<review_id>')
 
 
 @app.route('/')
