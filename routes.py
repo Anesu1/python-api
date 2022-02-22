@@ -1,5 +1,6 @@
 from flask_restful import Resource
 from repository import Repository
+from flask import request
 
 repo = Repository()
 
@@ -9,12 +10,16 @@ class BookList(Resource):
     
 class Book(Resource):
     def get(self, book_id):
-        return {'hello': 'from book {book_id}'}
+        return repo.book_get_by_id(int(book_id)).__dict__
+    def post(self):
+        data = request.get_json()
+        return repo.book_add(data).__dict__
     
 class ReviewList(Resource):
-    def get(self):
-        return {'hello': 'from reviews'}
+    def get(self, book_id):
+        return [review.__dict__ for review in repo.reviews_get_by_book_id(int(book_id))]
     
 class Review(Resource):
-    def get(self, review_id):
-        return {'hello': 'from review {review_id}'}
+    def post(self):
+        data = request.get_json()
+        return repo.review_add(data).__dict__

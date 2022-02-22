@@ -10,4 +10,3 @@ class ReviewModel:
         self.content = content
         self.bookId = bookId
         self.id = id
-        

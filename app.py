@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_restful import Api
 from routes import BookList, ReviewList, Book, Review
 
@@ -6,6 +7,8 @@ BASE_URL = '/api'
 
 app = Flask(__name__)
 api = Api(app)
+
+CORS(app)
 
 api.add_resource(BookList, f'{BASE_URL}/BookList')
 api.add_resource(Book, f'{BASE_URL}/Books/<book_id>')
