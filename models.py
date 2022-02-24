@@ -4,9 +4,9 @@ class BookModel:
         self.author = author
         self.cover = cover
         self.bookId = id
-        
+
 class ReviewModel:
     def __init__(self, content, bookId, id=-1):
         self.content = content
         self.bookId = bookId
-        self.id = id
+        self.id = id 
