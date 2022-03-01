@@ -1,4 +1,6 @@
 from models import BookModel, ReviewModel
+from flask import current_app, g
+import os
 
 book1 = BookModel('The Hobbit', 'J R R Tolkien', 1)
 book2 = BookModel('The Lord Of The Rings', 'J R R Tolkien', 2)
@@ -7,20 +9,75 @@ review2 = ReviewModel('I hated it', 1)
 review3 = ReviewModel('an even more timeless classic', 2)
 review4 = ReviewModel('I hated it even more', 2)
 
+
+
+USER = os.environ.get('USER')
+
+
 class Repository():
     def books_get_all(self):
-        return [book1, book2]
+        conn = None
+        try:
+            def get_db(self):
+                if 'db' not in g:
+                     g.db = current_app.config['pSQL_pool'].getconn()
+                return g.db
+            if (conn):
+                ps_cursor = conn.cursor()
+                ps_cursor.execute(
+                "select title, author, bookId, cover from book order by title")
+                book_records = ps_cursor.fetchall()
+                book_list = []
+                for row in book_records:
+                    book_list.append(BookModel(row[0], row[1], row[2],row[3]))
+                
+                ps_cursor.close()
+            return book_list
+
+        except Exception as error:
+            print(error)
+        finally:
+            if conn is not None:
+                conn.close()
+
+
 
     def book_get_by_id(self, book_id):
         books = [book1, book2]
         return next((x for x in books if x.bookId == book_id), None)
-    
+
     def book_add(self, data):
-        return BookModel(data['title'], data['cover'], 3, data['author'])
+        def book_add(self, data):
+            conn = None
+            try:
+                conn = self.get_db()
+                if (conn):
+                    ps_cursor = conn.cursor.execute("INSERT INTO book(title,cover,author)VALUES (%s, %s, %s) RETURNING bookId",(data['title'], data['cover'], data['author']))
+                    conn.commit()
+                    id = ps_cursor.fetchone()[0]
+                    
+                    ps_cursor.close()
+                    book = BookModel(data['title'],id, data['author'], data['cover'])
+                
+                return book
+            except Exception as error:
+                print(error)
+            finally:
+                if conn is not None:
+                    conn.close()
+
 
     def reviews_get_by_book_id(self, book_id):
         reviews = [review1, review2, review3, review4]
         return [x for x in reviews if x.bookId == book_id]
-    
+
     def review_add(self, data):
         return ReviewModel(data['content'], data['bookId'], 1)
+
+    # def get_db(self):
+    #  return psycopg2.connect(
+    #      host=HOST,
+    #      database=DATABASE,
+    #      port=DB_PORT,
+    #      user=USER,
+    #      password=PASSWORD)

@@ -5,8 +5,9 @@ from unittest import TestCase
 import unittest
 from app import app
 import json
+import os
 
-BASE_URL = "/api/bookreactions"
+BASE_URL = os.environ.get('BASE_URL')
 book1 = BookModel('test 1', 'J R R Tolkien', 1)
 book2 = BookModel('test 2', 'J R R Tolkien', 2)
 
