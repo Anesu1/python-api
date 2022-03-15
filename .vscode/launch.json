@@ -16,7 +16,7 @@
                 "DATABASE": "bookreactions",
                 "DB_PORT": "5432",
                 "USER": "postgres",
-                "PASSWORD": "mskrab002",
+                "PASSWORD": "a ",
                 "MIN":"1",
                 "MAX":"5"
             },

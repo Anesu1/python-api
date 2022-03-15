@@ -15,13 +15,14 @@ USER = os.environ.get('USER')
 
 
 class Repository():
-    def books_get_all(self):
-        conn = None
-        try:
-            def get_db(self):
+    def get_db(self):
                 if 'db' not in g:
                      g.db = current_app.config['pSQL_pool'].getconn()
                 return g.db
+            
+    def books_get_all(self):
+        conn = None
+        try:
             if (conn):
                 ps_cursor = conn.cursor()
                 ps_cursor.execute(
@@ -47,7 +48,6 @@ class Repository():
         return next((x for x in books if x.bookId == book_id), None)
 
     def book_add(self, data):
-        def book_add(self, data):
             conn = None
             try:
                 conn = self.get_db()
