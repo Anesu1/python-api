@@ -14,7 +14,7 @@ review4 = ReviewModel("I hated it even more", 4)
 
 book_row = [
     (book1.title, book1.author, book1.bookId, book1.cover),
-    (book1.title, book1.author, book1.bookId, book1.cover)
+    (book2.title, book2.author, book2.bookId, book2.cover)
 ]
 
  
