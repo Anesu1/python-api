@@ -8,7 +8,7 @@ from routes import BookList, ReviewList, Book, Review
 BASE_URL = os.environ.get('BASE_URL')
 HOST = os.environ.get('HOST')
 DATABASE = os.environ.get('DATABASE')
-DB_PORT = os.environ.get('DB_PORT')
+PORT = os.environ.get('DB_PORT')
 USER = os.environ.get('USER')
 PASSWORD = os.environ.get('PASSWORD')
 MAX = os.environ.get('MAX')
@@ -38,4 +38,4 @@ def close_conn(e):
         print('released connection back to pool')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=DEBUG)
